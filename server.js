@@ -4,7 +4,6 @@ const express = require('express')
 const Slapp = require('slapp')
 const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
-const persist = require('./persist')
 const jira = require('./jira')
 var jiraConfig = {}
 
@@ -24,18 +23,9 @@ I will respond to the following messages:
 \`(ra16-|mds-|px-|vm-|vnow-)1234\` - to fetch a JIRA issue (e.g. PX-1416 or VNOW-5081)
 `
 
-persist.getCreds()
-  .then(jiravals => {
-    jiraConfig = jiravals
-  // console.log('jiravals = ' + jiravals.jirau + ' ' + jiravals.jirap)
-  })
-  .catch(function (err) {
-    console.error('Promise Rejected: ' + err)
-  })
-
 // *********************************************
-  // Setup different handlers for messages
-  // *********************************************
+// Setup different handlers for messages
+// *********************************************
 
 // response to the user typing "help"
 slapp.message('help', ['mention', 'direct_message'], (msg) => {
@@ -51,7 +41,8 @@ slapp.message(/(ra16-|mds-|px-|vm-|vnow-)(\d+)/i, ['mention', 'direct_message', 
   // there may be multiple issues in the text
   for (var i = 0; i < match.length; i++) {
     const issueKey = match[i].toUpperCase()
-    jira.getIssue(jiraConfig.jiraurl, jiraConfig.jirau, jiraConfig.jirap, issueKey).then(jiraIssue => {
+    // these env vars are configured during bot installation and passed in during initialization
+    jira.getIssue(process.env.JIRA_URL, process.env.JIRA_U, process.env.JIRA_P, issueKey).then(jiraIssue => {
       var avatarUrl = null
       if (jiraIssue.fields.assignee != null) {
         avatarUrl = jiraIssue.fields.assignee.avatarUrls['48x48']
