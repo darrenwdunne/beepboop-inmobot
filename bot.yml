@@ -1,0 +1,4 @@
+name: inMoBot
+description: SlackBot to fetch JIRA tickets via URL
+avatar: .beepboop/avatar.png
+# To learn everything supported in the bot.yml file, visit https://beepboophq.com/docs/article/bot-yml
