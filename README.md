@@ -1,3 +1,3 @@
 # inMoBot
 
-Slackbot for Development
+Slackbot for Development.
