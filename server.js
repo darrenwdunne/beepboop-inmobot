@@ -23,9 +23,16 @@ var previousIssue = ''
 // response to the user typing "help"
 slapp.message('help', ['mention', 'direct_message'], (msg) => {
   msg.say(`
+<<<<<<< HEAD
 I will respond to the following messages:
 \`help\` - to see this message
 \`(ra16-|mds-|px-|vm-|vnow-)1234\` - to fetch a JIRA issue (e.g. PX-1416 or VNOW-5081).
+=======
+Howdy! I will respond to the following messages:
+\`help\` - to see this message
+\`(cs-|ra16-|mds-|px-|vm-|vnow-)1234\` - to fetch a JIRA issue (e.g. PX-1416 or VNOW-5081).
+\`(bitbucket pull request url)\` - to fetch the related issue, and current status of approvers (e.g. https://bitbucket.org/inmotionnow/web-vnow/pull-requests/248/petr-vnow-3774-develop/diff)
+>>>>>>> inmobot-test/master
 \`rand\` - show me a random Low priority bug from the Spark Backlog
 `)
 })
@@ -40,6 +47,7 @@ slapp.message('rand', ['mention', 'direct_message'], (msg) => {
 // Respond to a JIRA issue (e.g. PX-1234)
 slapp.message(/(cs-|ra16-|mds-|px-|vm-|vnow-)(\d+)/i, ['mention', 'direct_message', 'ambient'], (msg) => {
   var text = (msg.body.event && msg.body.event.text) || ''
+<<<<<<< HEAD
   var pattern = /(cs-|ra16-|mds-|px-|vm-|vnow-)(\d+)/ig
   var match = text.match(pattern)
 
@@ -51,6 +59,38 @@ slapp.message(/(cs-|ra16-|mds-|px-|vm-|vnow-)(\d+)/i, ['mention', 'direct_messag
 })
 
 function outputMessage (msg, issueKey, introText) {
+=======
+  var prPattern = /pull-requests/ig
+  var pattern = /(cs-|ra16-|mds-|px-|vm-|vnow-)(\d+)/ig
+  var prMatch = text.match(prPattern)
+  var match = text.match(pattern)
+
+  if (prMatch !== null && prMatch.length > 0) {
+    // process as a pull request - need to extract the url that was pasted
+    var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/
+    var urlMatch = text.match(urlPattern)
+    jira.getPRStatusString(process.env.BITBUCKET_URL, process.env.JIRA_U, process.env.JIRA_P, urlMatch[0])
+      .then(bbStr => {
+        // what if user posted PX-123 and then a separate PR url? Need to make sure we only return the text for the pr (not the random issue number)
+        if (match.length > 1) {
+          match = urlMatch[0].match(pattern)
+        }
+        // outputMessage(msg, match[0].toUpperCase(), bbStr)
+        outputMessage(msg, match[0], '', 'Reviewers: ' + bbStr)
+      })
+  } else {
+    // treat is as a regular text issue
+
+    // there may be multiple issues in the text
+    for (var i = 0; i < match.length; i++) {
+      const issueKey = match[i].toUpperCase()
+      outputMessage(msg, issueKey, '', '')
+    }
+  }
+})
+
+function outputMessage (msg, issueKey, introText, footerText) {
+>>>>>>> inmobot-test/master
   if (previousIssue !== issueKey) {
     // don't want to be "chatty" - if a user keeps mentioning a single issue, only report back on it once
     previousIssue = issueKey
@@ -70,6 +110,10 @@ function outputMessage (msg, issueKey, introText) {
           // thumb_url: avatarUrl,
           author_name: getAttributesText(jiraIssue),
           author_icon: avatarUrl,
+<<<<<<< HEAD
+=======
+          footer: footerText,
+>>>>>>> inmobot-test/master
           title_link: 'https://inmotionnow.atlassian.net/browse/' + issueKey,
           // mrkdwn_in: ['fields'],
           // 'fields': [
