@@ -32,24 +32,6 @@ module.exports.getIssue = function (jiraurl, jirau, jirap, issue) {
   })
 }
 
-<<<<<<< HEAD
-// console.log('Querying: ' + QUERY_STR)
-// console.time('query')
-// request(
-//     {
-//         url: URL,
-//         headers: {
-//             "Authorization": "Basic " + new Buffer(opt.username + ":" + opt.password).toString("base64")
-//         }
-//     },
-//     function (error, response, results) {
-//         // results is already json data
-//         var jiraData = JSON.parse(results)
-//         var changelog = jiraData.issues[0].changelog
-//         console.timeEnd('query')
-//     }
-// )
-=======
 // Developers usually paste the diff url into Slack:
 // https://bitbucket.org/REPNAME/web-vnow/pull-requests/290/username-vnow-6234-dropbox-develop/diff
 // need to parse out:
@@ -109,4 +91,3 @@ module.exports.getPRStatusString = function (bbUrl, jirau, jirap, bitBucketDiffU
     }
   })
 }
->>>>>>> inmobot-test/master

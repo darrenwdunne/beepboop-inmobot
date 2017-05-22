@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 name: inMoBot
 description: SlackBot to fetch JIRA tickets via URL
-=======
-name: inMoBot-Test
-description: SlackBot to fetch JIRA tickets via URL (Test Porposies)
->>>>>>> inmobot-test/master
 avatar: .beepboop/avatar.png
 # To learn everything supported in the bot.yml file, visit https://beepboophq.com/docs/article/bot-yml
 # Following values are "secret" and will be set when installing the slackbot
@@ -23,9 +18,6 @@ config:
   friendly_name: JIRA P
   info: JIRA P
   type: secret
-<<<<<<< HEAD
-  global: true
-=======
   global: true
 - name: BITBUCKET_URL
   friendly_name: BITBUCKET_URL
@@ -37,5 +29,3 @@ config:
   info: BITBUCKET_DIFF_URL_PREFIX
   type: secret
   global: true
- 
->>>>>>> inmobot-test/master
