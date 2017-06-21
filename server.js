@@ -7,6 +7,8 @@
 
 const express = require('express')
 const Slapp = require('slapp')
+const moment = require('moment')
+
 const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
 require('dotenv').config() // uid/pw go in .env file not checked in
@@ -146,6 +148,10 @@ function getAttributesText (jiraIssue) {
     case 'Open':
       text += ' :jira-open:'
       break
+  }
+  if (jiraIssue.fields.duedate !== undefined) {
+    var due = moment(jiraIssue.fields.duedate)
+    text += ' | Due: ' + due.format('MMM DD')
   }
   return text
 }
