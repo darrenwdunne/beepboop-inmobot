@@ -1,3 +1,8 @@
+// inMoBot
+// Author: Darren Dunne
+
+// TODO: add Due Date to the description line (but only if a due date is set)
+
 'use strict'
 
 const express = require('express')
