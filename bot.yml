@@ -29,3 +29,13 @@ config:
   info: BITBUCKET_DIFF_URL_PREFIX
   type: secret
   global: true
+- name: PRODUCT_OWNERS
+  friendly_name: PRODUCT_OWNERS
+  info: PRODUCT_OWNERS
+  type: secret
+  global: true
+- name: JIRA_REQUEST_PROJECT_PREFIX
+  friendly_name: JIRA_REQUEST_PROJECT_PREFIX
+  info: JIRA_REQUEST_PROJECT_PREFIX
+  type: secret
+  global: true
