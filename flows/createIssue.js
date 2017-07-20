@@ -231,7 +231,6 @@ module.exports = (slapp) => {
           promptText = `On behalf of ${state.accountName}, what is the Priority relative to closing the opportunity?`
           break
       }
-      state.accountName = promptText
       msg.respond({
         text: state.accountName
           ? `${owner} is going to be thrilled to hear about a new ${state.product} request from ${state.accountName}!`
